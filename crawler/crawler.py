@@ -22,26 +22,18 @@ def get_camera_names(url):
 
     return camera_names
 
-def get_model_url(model_name):
+def get_specs_url(model_name):
     return "http://imaging.nikon.com/lineup/dslr/%s/spec.htm" % model_name
 
 def get_img_url(model_name):
     return "http://imgsv.imaging.nikon.com/lineup/dslr/img/product_%s.png" % model_name
     
 def filter_keys(old_keys):
-    new_keys = []
-    for key in old_keys:
-        if len(key.get("class")) == 1:
-            new_keys.append(key)
-    return new_keys
+    return [key for key in old_keys if len(key.get("class")) == 1]
 
 def filter_vals(old_vals):
-    new_vals = []
-    for val in old_vals:
-        if len(val.get("class")) == 1:
-            new_vals.append(val)
-    return new_vals
-
+    return [val for val in old_vals if len(val.get("class")) == 1]
+    
 def get_specs(html):
 
     soup = BeautifulSoup(html)
@@ -65,13 +57,12 @@ def get_specs(html):
 
 def get_cameras(root_url):
     camera_names = get_camera_names(root_url)
-    camera_urls = []
     camera_specs = {}
     for name in camera_names:
         print 'fetching info for ' + name + '...'
         camera_specs[name] = {}
         camera_specs[name]['img'] = get_img_url(name)
-        url = get_model_url(name)
+        url = get_specs_url(name)
         r = requests.get(url)
         html = r.text
         keys, vals = get_specs(html)
