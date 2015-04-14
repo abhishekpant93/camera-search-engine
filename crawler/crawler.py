@@ -53,6 +53,21 @@ def get_specs(product_url):
         if lbls[i].text != "Best Sellers Rank":
             specs[lbls[i].text] = vals[i].text
 
+    id_price = "priceblock_"
+    class_price = "a-color-price"
+    if len(soup.find_all("span", id = re.compile(id_price))) > 0:
+        specs['price'] = float(soup.find_all("span", id = re.compile(id_price))[0].text.encode('ascii', 'ignore').replace(",", ""))
+    elif len(soup.find_all("span", class_ = re.compile(class_price))) > 0:
+        specs['price'] = float(soup.find_all("span", class_ = re.compile(class_price))[0].text.encode('ascii', 'ignore').replace(",", ""))
+    else:
+        specs['price'] = 100000
+
+    alt_img = "Nikon"
+    imgs = soup.find_all("img", attrs={"alt": re.compile(alt_img)})
+    if len(imgs) > 0:
+        specs['img'] = imgs[0].get("src")
+    else:
+        specs['img'] = None
     return specs
     
 def get_reviews_url(product_url):
@@ -65,8 +80,19 @@ def get_reviews(product_url):
     # print 'reviews_url = ', reviews_url
     r = requests.get(reviews_url)
     soup = BeautifulSoup(r.text)
+
+    reviews = {}
+    
+    class_ratings = "s_star_"
+    ratings = soup.find_all("span", class_ = re.compile(class_ratings))
+    if len(ratings) > 0:
+        reviews['avg_rating'] = float(ratings[0].text.split()[0])
+    else:
+        reviews['avg_rating'] = 4.0
+    
+    reviews['reviews'] = []
     reviews_div = soup.find_all("div", attrs={"style": "margin-left:0.5em;"})
-    reviews = []
+
     for review_div in reviews_div:
         text = review_div.text
         text = [line.rstrip().lstrip() for line in text.split("\n") if len(line.rstrip()) > 0]
@@ -100,10 +126,11 @@ def get_reviews(product_url):
             body = "".join(text[bodyIdx:])
         if usefulnessIdx >= 0:
             usefulness = float(text[usefulnessIdx].split()[0]) / float(text[usefulnessIdx].split()[2])
-            
+
         review = {'title': title, 'rating': rating, 'body': body, 'usefulness': usefulness}
-        reviews.append(review)
-                
+            
+        reviews['reviews'].append(review)
+
     return reviews
         
 def get_camera_info():
@@ -113,7 +140,7 @@ def get_camera_info():
         product_url = get_product_url(model)
         if product_url is None:
             continue
-        print 'fetching info for ' + model + '...'
+        print 'fetching info for ' + model + ' from ' + product_url + '...'
         cameras[model] = {}
         cameras[model]['url'] = product_url
         cameras[model]['specs'] = get_specs(product_url)
