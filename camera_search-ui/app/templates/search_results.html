@@ -1,0 +1,137 @@
+{% load staticfiles %}
+{% load dictionarylookup %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <!-- Meta, title, CSS, favicons, etc. -->
+	    <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Nikon Search Engine">
+		<meta name="keywords" content="">
+		<!-- <meta name="author" content="Group 6"> -->
+
+		<!-- Bootstrap core CSS -->
+		<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+		<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../static/slider/css/slider.css" rel="stylesheet">
+		<link href="../static/css/bootstrap-switch.min.css" rel="stylesheet">
+		<link href="../static/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
+
+		<!-- Custom CSS -->
+		<!-- <link href="{% static 'tldr/css/style.css' %}" rel="stylesheet"> -->
+		<style>
+			body { 
+				padding-top: 70px;
+				/*background-color: #F7F5F2;*/
+			}
+			.navbar-brand {
+ 				float:none;
+			}
+			table td {
+				border-top: none !important;
+			}
+			.navbar .navbar-brand:hover, 
+			.navbar .navbar-brand:focus {
+  				background-color: transparent;
+			}	
+		</style>
+		<title>
+			Camera Search
+		</title>
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+			    <div class="navbar-header">
+			      <button id="toggle_button" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <!-- <a class="navbar-brand navbar-center" href="{% url 'app:index' %}" style="margin-left: 100px;">Nikon Camera Search Engine</a> -->
+			      	<div class="navbar-collapse collapse">
+					    <ul class="nav nav-justified">
+					      <li><a href="{% url 'app:index' %}" class="navbar-brand">Nikon Cameras</a></li>
+					    </ul>
+  					</div>
+			    </div>
+			</div><!-- /.container-fluid -->
+		</nav>
+
+		<!-- Modal -->
+		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="aboutModalLabel">Nikon Camera Search Engine</h4>
+		      </div>
+		      <div class="modal-body">
+		        <b>Developed by:</b>
+		       <p>
+		        	<ul>
+		        		<li><h6>Abhishek Pant</h6></li>
+		        		<li><h6>Sachin Kumar</h6></li>
+		        		<li><h6>Siddharth Rakesh</h6></li>
+		        		<li><h6>Vikas Patidar</h6></li>
+		        		<li><h6>D P Tejas</h6></li>
+		        		<li><h6>Payal Priyadarshini</h6></li>
+		        		<li><h6>Karthik Ramanathan</h6></li>	        		
+		        	</ul>
+		        </p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="container" id="results">
+				{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+				<table class="table">
+				{% if summary %}
+					{% for key,value in summary.items %}
+						{% if forloop.counter0|divisibleby:3 %}
+							{% ifnotequal counter 1 %}
+								</tr>
+							{% endifnotequal %}	
+							<tr>
+						{% endif %}
+						<td align="center">
+							<div style="height:300px;">
+								<img src="{{value.specs.img}}" style="height:200px; padding:20px"/><br>
+								<span><a href="{{value.url}}">Nikon {{value.specs|get_item:"Item model number"}} Digital SLR</a></span>
+								<input type="number" value="{{value|get_item:'avg rating'}}", class="rating" min=1 max=5 step=1  data-size="xs" />
+								<span>Rs. {{value.specs.price}}</span>
+							</div>
+						</td>
+					{% endfor %}
+				{% endif %}
+				</table>
+			</div>
+		</div>
+		<hr>
+		<div class="container">
+			<footer>
+				<b>Information Retrieval, Department of Computer Science and Engineering, IIT Kharagpur</b>
+				<ul class="nav navbar-nav navbar-right">
+			      <li id="about_item" class=""><a id="about" onclick="$('#aboutModal').modal()" href="#">Team</a></li>
+			      </ul>
+			</footer>
+		</div>
+		<!-- JQuery core javascript  -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../static/slider/js/bootstrap-slider.js"></script>
+		<script type="text/javascript" src="../static/js/bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="../static/js/star-rating.min.js"></script>
+		<script type="text/javascript" src="../static/js/main.js"></script>
+		
+		<!-- Bootstrap core JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	</body>
+</html>
