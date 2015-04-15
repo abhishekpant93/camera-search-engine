@@ -110,10 +110,11 @@ def parse(data):
                                 parsed_dict[model]['specs'][k] = int(v)
                         else: 
                                 parsed_dict[model]['specs'][k] = v
-                parsed_dict[model]['avg rating'] = data[model]['ratings']['avg_rating']
+                parsed_dict[model]['avg rating'] = data[model]['reviews']['avg_rating']
         return parsed_dict                        
 
 def main():
         data = loadfromjson()
         parsed = parse(data)
-
+	final_data = add_sentiment_analysis(parsed)
+	
