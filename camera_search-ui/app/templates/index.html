@@ -21,7 +21,7 @@
 		<style>
 			body { 
 				padding-top: 70px;
-				background-color: #F7F5F2;
+				/*background-color: #F7F5F2;*/
 			}
 			.navbar-brand {
  				float:none;
@@ -89,9 +89,9 @@
 		</div>
 
 		<div class="container-fluid" style="width:100%;">
-			{% if error_message %}<div class="well"><strong>{{ error_message }}</strong></div>{% endif %}
+			<!-- {% if error_message %}<div class="well"><strong>{{ error_message }}</strong></div>{% endif %} -->
 			<div class="jumbotron" style="background:transparent !important; text-align:center">
-  				<h2>Camera Search. Reinvented for humans</h2>
+  				<h2>Camera Search. Reinvented.</h2>
 			</div>
 			<div class="container-fluid" style="background-color:#F2EEE9; padding:20px; width:100%;">
 			<div class="container">
@@ -106,32 +106,30 @@
 			    <div style="padding:10px">
 			    	<table class="table">
 			    		<tr>
-			    			<td>Price Range:</td><td><b>10</b> <input name="price_range" value="250,450" style="width:100%;" id="price-range" type="text" class="range-slider form-control" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>1000</b></td>
-			    			<td>Optical Sensor Resolution:</td><td><b>10</b> <input name="res" value="250,450" style="width:100%;" id="pixel-range" type="text" class="range-slider form-control" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>1000</b></td>
+			    			<td><input type="checkbox" name="price_check"> Price Range:</td><td><b>23K &nbsp</b></td> <td><input name="price" value="23000,357000" style="width:80%;" id="price-range" type="text" class="range-slider form-control" data-slider-min="23000" data-slider-max="357000" data-slider-step="5" data-slider-value="[23000,357000]"/></td><td> <b>&nbsp 3.57 Lakhs</b></td>
+			    			<td><input type="checkbox" name="Optical_Sensor_Resolution_check"> Optical Sensor Resolution:</td><td><b>12 Mp &nbsp</b></td><td><input name="Optical_Sensor_Resolution" value="12,37" style="width:80%;" id="pixel-range" type="text" class="range-slider form-control" value="" data-slider-min="12" data-slider-max="37" data-slider-step="1" data-slider-value="[12,37]"/></td><td> <b>&nbsp 37 Mp</b></td>
 
 			    		</tr>
 			    		<tr>
-			    			<td>Max Vertical Resolution:</td><td><b>10</b> <input name="vres" value="200" style="width:100%;" id="ex1" class="value-slider form-control" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> <b>10</b></td>
-			    			<td>Max Digital Zoom:</td><td><b>10</b> <input name="zoom" value="250" style="width:100%;" id="ex1" class="value-slider form-control" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> <b>10</b></td>
+			    			<td><input type="checkbox" name="Display_Resolution_Maximum_check"> Maximum Display Resolution:</td><td><b>720 p &nbsp</b></td><td> <input name="Display_Resolution_Maximum" value="720,1080" style="width:80%;" id="price-range" type="text" class="range-slider form-control" data-slider-min="720" data-slider-max="1080" data-slider-step="1" data-slider-value="[720,1080]"/></td><td> <b>&nbsp 1080 p</b></td>
+			    			<td><input type="checkbox" name="Optical_Zoom_check"> Optical Zoom: &nbsp</td><td><b>1x</b></td> <td><input name="Optical_Zoom" value="1,6" style="width:80%;" id="price-range" type="text" class="range-slider form-control" data-slider-min="1" data-slider-max="6" data-slider-step="1" data-slider-value="[1,6]"/></td><td> <b>&nbsp 6x</b></td>
 			    		</tr>
 			    		<tr>
-			    			<td>Max Storage Capacity:</td><td><b>10</b> <input name="storage" value="1" style="width:100%;" id="ex1" class="value-slider form-control" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> <b>10</b></td>
-			    			<td>Max Digital Zoom:</td><td><b>10</b> <input name="zoom" value="100" style="width:100%;" id="ex1" class="value-slider form-control" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> <b>10</b></td>
+			    			<td><input type="checkbox" name="Max_Storage_Capacity_check"> Max Storage Capacity: &nbsp</td><td><b>1</b></td><td> <input name="Max_Storage_Capacity" value="1,32" style="width:80%;" id="Item_Weight" type="text" class="range-slider form-control" data-slider-min="1" data-slider-max="32" data-slider-step="5" data-slider-value="[1,32]"/></td><td> <b>&nbsp 32</b></td>
+			    			<td><input type="checkbox" name="Screen_Size_check"> Screen Size: &nbsp</td><td><b>3 Inches</b></td><td><input name="Screen_Size" value="3,4" style="width:80%;" id="price-range" type="text" class="range-slider form-control" data-slider-min="3" data-slider-max="4" data-slider-step="1" data-slider-value="[3,4]"/> </td><td><b>&nbsp 4 Inches</b></td>
 			    		</tr>
+			    		<!-- <tr>
+			    			<td><input type="checkbox" name="Has_Self_Timer_check">Has Self Timer: &nbsp</td><td></td><td><input style="width:80%;" name="Has_Self_Timer" class="check" type="checkbox" checked></td><td></td>
+			    			<td><input type="checkbox" name="Has_Image_Stabilization_check">Has Image Stabilization:</td><td></td><td><input name="Has_Image_Stabilization" style="width:80%;" class="check" type="checkbox" checked></td><td></td>
+			    		</tr> -->
 			    		<tr>
-			    			<td>Has Self Timer:</td><td><input style="width:100%;" name="timer" class="form-control" type="checkbox" checked></td>
-			    			<td>Has Image Stabilization:</td><td><input name="image_stable" style="width:100%;" class="form-control" type="checkbox" checked></td>
-			    		</tr>
-			    		<tr>
-			    			<td>Min Focal Length:</td><td><b>10</b> <input name="min_focal" value="10" style="width:100%;" id="ex1" class="value-slider form-control" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> <b>10</b></td>
-			    			<td>Display Type:</td>
+			    			<td><input type="checkbox" name="Min_Focal_Length_check"> Min Focal Length: &nbsp</td>
 			    			<td>
-			    				<select name="display" value="Any" class="form-control" id="dtype" style="width:85%;">
-							        <option>Any</option>
-							        <option>LCD</option>
-							        <option>LED</option>
-							    </select>
-  									
+			    				<b>1.0x</b></td> <td> <input name="Min_Focal_Length" value="1,150" style="width:80%;" id="Item_Weight" type="text" class="range-slider form-control" data-slider-min="1" data-slider-max="150" data-slider-step="1" data-slider-value="[1,150]"/></td><td> <b>&nbsp 150x</b>
+			    			</td>
+			    			<td><input type="checkbox" name="Item_Weight_check"> Item Weight: &nbsp</td>
+			    			<td>
+			    				<b>454 g</b></td><td> <input name="Item_Weight" value="454,2500" style="width:80%;" id="Item_Weight" type="text" class="range-slider form-control" data-slider-min="454" data-slider-max="2500" data-slider-step="1" data-slider-value="[454,2500]"/></td><td> <b>&nbsp 2.5 Kg</b>  									
 			    			</td>
 			    		</tr>
 			    	</table>
