@@ -3,8 +3,6 @@ import json
 import operator
 from collections import defaultdict
 
-os.chdir("../crawler")
-
 def print_dict(data):
         for model, info in data.iteritems():
                 print 'Model: ' + model
@@ -17,7 +15,7 @@ def print_dict(data):
         return True
 
 def loadfromjson():
-	specsFile = "cameras.json"
+	specsFile = "../crawler/cameras.json"
 	with open(specsFile,'r+') as fp:
 		data = json.load(fp)
 		return data
@@ -54,7 +52,22 @@ def specs(data,sorted_specs):
                         specs = info['specs']
                         if k in specs:
                                 print specs[k]
-
+                                
+def add_sentiment_analysis(data):
+        sent_data = data
+        f = open("Sentiments.txt","rb")
+        fl = f.read().split("\n")
+        for line in fl[0:]:
+                words = line.split(":")
+                values = words[1].split(" ")
+                sent_data[words[0]]['sent'] = []
+                sent_data[words[0]]['sent'].append(values[0])
+                sent_data[words[0]]['sent'].append(values[1])
+                sent_data[words[0]]['sent'].append(values[2])
+                sent_data[words[0]]['sent'].append(values[3])
+                sent_data[words[0]]['sent'].append(values[4])
+        return sent_data
+        
 def parse(data):
         parsed_dict = {}
         for model,info in data.iteritems():
