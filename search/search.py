@@ -15,10 +15,10 @@ def print_dict(data):
         return True
 
 def loadfromjson():
-	specsFile = "../crawler/cameras.json"
-	with open(specsFile,'r+') as fp:
-		data = json.load(fp)
-		return data
+        specsFile = "../crawler/cameras.json"
+        with open(specsFile,'r+') as fp:
+                data = json.load(fp)
+                return data
 
 def analyze(data):
         specs_dict = defaultdict(int)
@@ -37,13 +37,38 @@ def search(data,query):
         for model,info in data.iteritems():
                 specs = info['specs'] 
                 for k,v in query.iteritems():
+                        flag = True
                         if k in specs and specs[k] >= v[0] and specs[k] <= v[1]:
                                 print k,"is satisfied"        
                         else:
+                                flag = False
                                 break
-                result[model] = specs
+                if flag == True:
+                        result[model] = info
+                        print model,"is added"
                 # Rank based on avg rating         
         return result
+
+def min_max(data):
+        rng = {}
+        key_list = ['Screen Size','Optical Zoom','Item Weight','Optical Sensor Resolution','Min Focal Length',
+ 'Min Shutter Speed','Continuous Shooting Speed','Max Resolution','Resolution','Display Resolution Maximum',
+ 'Number Of Items','Memory Slots Available','Digital Zoom','Memory Storage Capacity','Min Aperture',
+ 'Max Vertical Resolution','Model Year','price']
+        for key in key_list:
+                rng[key] = []
+                rng[key].append(1000000)
+                rng[key].append(-1000000)
+        for model,info in data.iteritems():
+                specs = info['specs']
+                for k,v in specs.iteritems():
+                        if k in key_list:
+                                if rng[k][0] > v:
+                                        rng[k][0] = v
+                                if rng[k][1] < v:
+                                        rng[k][1] = v
+
+        return rng
 
 def specs(data,sorted_specs):
         for k,v in sorted_specs:
@@ -116,5 +141,4 @@ def parse(data):
 def main():
         data = loadfromjson()
         parsed = parse(data)
-	final_data = add_sentiment_analysis(parsed)
-	
+        final_data = add_sentiment_analysis(parsed)
