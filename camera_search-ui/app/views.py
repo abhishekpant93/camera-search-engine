@@ -55,7 +55,7 @@ def search(request):
 	# print results
 	for key in results.keys():
 		if(results[key]['specs'].has_key("Item model number")):
-			if (request.POST['query_term'] in results[key]['specs']['Item model number']) or (results[key]['specs']['Item model number'] in request.POST['query_term']):
+			if (request.POST['query_term'].lower() in results[key]['specs']['Item model number'].lower()) or (results[key]['specs']['Item model number'].lower() in request.POST['query_term'].lower()):
 				sents = results[key]['sent']
 				vsents = [float(v) for v in sents]
 				sumsents = sum(vsents)
