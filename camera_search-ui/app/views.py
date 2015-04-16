@@ -51,10 +51,24 @@ def search(request):
 
 	results = s.search(data, query)
 	print 'QUERY: ',query
-	#print results
-	# for key in results['specs']:
-		
-	return render(request, 'search_results.html', {'summary':results})
+	resList = []
+	# print results
+	for key in results.keys():
+		if(results[key]['specs'].has_key("Item model number")):
+			if (request.POST['query_term'] in results[key]['specs']['Item model number']) or (results[key]['specs']['Item model number'] in request.POST['query_term']):
+				sents = results[key]['sent']
+				vsents = [float(v) for v in sents]
+				sumsents = sum(vsents)
+				print sumsents
+				nsents = [0.0,0.0,0.0,0.0,0.0]
+				if(sumsents > 0):
+					nsents = [(i*100)/sumsents for i in vsents]
+				results[key]['sent'] = nsents
+				resList.append(results[key])
+				print nsents
+		# print results[key]['specs']
+	resList.sort(key=lambda x:x['avg rating'], reverse=True)
+	return render(request, 'search_results.html', {'summary':resList})
 	# return HttpResponse(len(results.keys()))
 	# return HttpResponseRedirect(reverse('app:search_results', args=()))
 

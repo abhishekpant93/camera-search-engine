@@ -95,19 +95,32 @@
 				{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 				<table class="table">
 				{% if summary %}
-					{% for key,value in summary.items %}
+					{% for value in summary %}
 						{% if forloop.counter0|divisibleby:3 %}
 							{% ifnotequal counter 1 %}
 								</tr>
 							{% endifnotequal %}	
 							<tr>
 						{% endif %}
-						<td align="center">
-							<div style="height:300px;">
+						<td align="center" style="padding-top:50px;">
+							<div style="height:300px;" >
+								<div class="progress show-tooltip" style="width:200px;">
+								  <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{value.sent.0}}%" data-toggle="tooltip" data-placement="right" data-html="true" title="{{value.sent.0}}% reviews have a very negative sentiment">
+								  </div>
+								  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{value.sent.1}}%" data-toggle="tooltip" data-placement="right" data-html="true" title="{{value.sent.1}}% reviews have a negative sentiment">
+								  </div>
+								  <div class="progress-bar" role="progressbar" style="width:{{value.sent.2}}%" data-toggle="tooltip" data-placement="right" data-html="true" title="{{value.sent.2}}% reviews have a nuetral sentiment">
+								  </div>
+								  <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{value.sent.3}}%" data-toggle="tooltip" data-placement="right" data-html="true" title="{{value.sent.3}}% reviews have a positive sentiment">
+								  </div>
+								  <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{value.sent.4}}%" data-toggle="tooltip" data-placement="right" data-html="true" title="{{value.sent.4}}% reviews have a very positive sentiment">
+								  </div>
+								</div>
 								<img src="{{value.specs.img}}" style="height:200px; padding:20px"/><br>
 								<span><a href="{{value.url}}">Nikon {{value.specs|get_item:"Item model number"}} Digital SLR</a></span>
 								<input type="number" value="{{value|get_item:'avg rating'}}", class="rating" min=1 max=5 step=1  data-size="xs" />
-								<span>Rs. {{value.specs.price}}</span>
+								<span>Rs. {{value.specs.price}}</span><br>
+								<span>{{value.specs|get_item:"Max Resolution"}} MP, {{value.specs|get_item:"Optical Zoom"}}X</span>
 							</div>
 						</td>
 					{% endfor %}
